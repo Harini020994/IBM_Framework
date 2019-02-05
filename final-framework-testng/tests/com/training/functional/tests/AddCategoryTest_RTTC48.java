@@ -1,6 +1,7 @@
 package com.training.functional.tests;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,15 +16,17 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.training.generics.ScreenShot;
+import com.training.pom.AddCategoryPOM;
 import com.training.pom.FilterOrderPOM;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
 
-public class FilterOrder {  
+public class AddCategoryTest_RTTC48 {  
  
 	private WebDriver driver;
 	private String baseUrl;
 	private FilterOrderPOM filterPOM;
+	private AddCategoryPOM addcategory;
 	private static Properties properties;
 	private ScreenShot screenShot;
 
@@ -37,7 +40,8 @@ public class FilterOrder {
 	@BeforeClass
 	public void setUp() throws Exception {
 		driver = DriverFactory.getDriver(DriverNames.CHROME);
-		filterPOM = new FilterOrderPOM(driver); 
+		filterPOM = new FilterOrderPOM(driver);
+		addcategory=new AddCategoryPOM(driver);
 		baseUrl = properties.getProperty("baseURL");
 		screenShot = new ScreenShot(driver); 
 		// open the browser 
@@ -50,39 +54,40 @@ public class FilterOrder {
 		driver.quit();
 	}
 	
-	@Test(priority=1)
-	public void validOrderTestWithId() {
-		String actual=filterPOM.verifyOrderDetailsWithId("86");
-		screenShot.captureScreenShot("Three_16");
-		String expected="86";
-		assertEquals(actual,expected);
-		
-	}
-	
 	
 	
 	@Test(priority=0)
-	public void validOrderTest() {
+	public void LoginTest() {
 		filterPOM.sendUserName("admin");
 		filterPOM.sendPassword("admin@123");
 		filterPOM.clickLoginBtn(); 
 		screenShot.captureScreenShot("First_16");
-		filterPOM.moveToSales(); 
-		filterPOM.clickOrders(); 
-		screenShot.captureScreenShot("Second_!6");
-		
+			
 		
 		
 	}
 	
-	@Test(priority=2)
-	public void validOrdertestwithname(){
-		String actual1=filterPOM.verifyOrderDetailsWithCustomer("Harini k");
-		screenShot.captureScreenShot("Four_16");
-		String expected1="Harini k";
-		assertEquals(actual1,expected1);
+	@Test(priority=1)
+	public void categoryAddition() {
+		addcategory.moveToCatalog();
+		addcategory.clickCategories();
+		String actual=addcategory.addNewCategory("Ornaments1","Ornaments for ladies");
+		String expected="Success: You have modified categories!";
+				boolean st=actual.contains(expected);
+				assertTrue(st);
 		
+	}
+	
+	@Test(priority=2)
+	public void addProduct() throws InterruptedException{
+		addcategory.moveToCatalog();
+		String actual=addcategory.addNewProduct("finger ring2","finger ring2","ornaments");
+		String expected="Success: You have modified products!";
+		boolean st=actual.contains(expected);
+		assertTrue(st);
 		
 		
 	}
+	
+	
 }

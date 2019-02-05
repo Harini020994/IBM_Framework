@@ -3,16 +3,14 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.training.functional.tests.FilterOrder">
+      <class name="com.training.functional.tests.FilterOrderTest_RTTC047">
         <methods>
-          <include name="validOrderTest"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-          <include name="validOrdertestwithname"/>
           <include name="setUpBeforeClass"/>
-          <include name="validOrderTestWithId"/>
+          <include name="setUp"/>
+          <include name="validOrderTestbyTotal"/>
+          <include name="tearDown"/>
         </methods>
-      </class> <!-- com.training.functional.tests.FilterOrder -->
+      </class> <!-- com.training.functional.tests.FilterOrderTest_RTTC047 -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

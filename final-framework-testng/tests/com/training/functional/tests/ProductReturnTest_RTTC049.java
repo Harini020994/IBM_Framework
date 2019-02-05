@@ -1,6 +1,7 @@
 package com.training.functional.tests;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,14 +17,16 @@ import org.testng.annotations.Test;
 
 import com.training.generics.ScreenShot;
 import com.training.pom.FilterOrderPOM;
+import com.training.pom.ProductReturnPOM;
 import com.training.utility.DriverFactory;
 import com.training.utility.DriverNames;
 
-public class FilterOrder {  
+public class ProductReturnTest_RTTC049 {  
  
 	private WebDriver driver;
 	private String baseUrl;
 	private FilterOrderPOM filterPOM;
+	private ProductReturnPOM returnPOM;
 	private static Properties properties;
 	private ScreenShot screenShot;
 
@@ -38,6 +41,7 @@ public class FilterOrder {
 	public void setUp() throws Exception {
 		driver = DriverFactory.getDriver(DriverNames.CHROME);
 		filterPOM = new FilterOrderPOM(driver); 
+		returnPOM=new ProductReturnPOM(driver);
 		baseUrl = properties.getProperty("baseURL");
 		screenShot = new ScreenShot(driver); 
 		// open the browser 
@@ -50,16 +54,7 @@ public class FilterOrder {
 		driver.quit();
 	}
 	
-	@Test(priority=1)
-	public void validOrderTestWithId() {
-		String actual=filterPOM.verifyOrderDetailsWithId("86");
-		screenShot.captureScreenShot("Three_16");
-		String expected="86";
-		assertEquals(actual,expected);
 		
-	}
-	
-	
 	
 	@Test(priority=0)
 	public void validOrderTest() {
@@ -67,22 +62,30 @@ public class FilterOrder {
 		filterPOM.sendPassword("admin@123");
 		filterPOM.clickLoginBtn(); 
 		screenShot.captureScreenShot("First_16");
-		filterPOM.moveToSales(); 
-		filterPOM.clickOrders(); 
-		screenShot.captureScreenShot("Second_!6");
-		
-		
+				
 		
 	}
 	
+	@Test(priority=1)
+	public void addProductReturn(){
+		filterPOM.moveToSales(); 
+		returnPOM.goToReturns();
+		String actual=returnPOM.addReturnProduct("86", "Harini k", "Harini", "k", "harinikantheti94@gmail.com", "8985670051", "Integer vitae iaculis massa", "SKU-003");
+		String expected="Success: You have modified returns!";
+		System.out.println(actual);
+		boolean st=actual.contains(expected);
+		assertTrue(st);
+		
+
+	}
+	
 	@Test(priority=2)
-	public void validOrdertestwithname(){
-		String actual1=filterPOM.verifyOrderDetailsWithCustomer("Harini k");
-		screenShot.captureScreenShot("Four_16");
-		String expected1="Harini k";
-		assertEquals(actual1,expected1);
-		
-		
+	public void deleteReturn() throws InterruptedException {
+		String actual=returnPOM.deleteReturn();
+		String expected="Success: You have modified returns!";
+		System.out.println(actual);
+		boolean st=actual.contains(expected);
+		assertTrue(st);
 		
 	}
 }
