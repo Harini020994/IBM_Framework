@@ -10,6 +10,9 @@ public class DBBean {
 	private String driver; 
 	private String userName; 
 	private String password;
+	private String orderId;
+	private String productName;
+	private String quantity;
 	
 	public DBBean(){}
 	
@@ -19,6 +22,8 @@ public class DBBean {
 		this.driver = driver;
 		this.userName = userName;
 		this.password = password;
+		
+		
 	}
 
 	public String getUrl() {
@@ -52,7 +57,30 @@ public class DBBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
 	
 	
 }

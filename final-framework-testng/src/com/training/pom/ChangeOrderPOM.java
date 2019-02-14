@@ -18,6 +18,7 @@ public class ChangeOrderPOM extends FilterOrderPOM{
 	 private WebDriver driver;
 	 private JavascriptExecutor js;
 	 private Actions action;
+	 private FilterOrderPOM filterPOM;
 	
 		
 	 
@@ -68,12 +69,34 @@ public class ChangeOrderPOM extends FilterOrderPOM{
 	
 	@FindBy(xpath="//li[@data-value='689']")
 	private WebElement elementToSelect;
-
 	
+	@FindBy(xpath="//ul[@class='dropdown-menu']//child::li")
+	private WebElement elementToSelect1;
+	
+	@FindBy(xpath="//input[@id='input-order-id']")
+	private WebElement orderId;
+	
+	@FindBy(xpath="//button[@id='button-filter']")
+	private WebElement filterBtn;
+	
+	@FindBy(xpath="//a[@class='btn btn-info']")
+	private WebElement viewBtn;
+	
+	@FindBy(xpath="//select[@id='input-order-status']")
+	private WebElement orderStatus;
+	
+	@FindBy(xpath="//button[@class='btn btn-primary']")
+	private WebElement addHistory;
+
+	public void filterOrder(String orderId) {
+	this.orderId.clear();
+	this.orderId.sendKeys(orderId);
+	this.filterBtn.click();
+	}
 		
 
 	public void editOrder(WebDriver driver) throws InterruptedException{
-		this.editBtn.click();
+				this.editBtn.click();
 		 js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", continueBtn);
 		Thread.sleep(2000);
@@ -81,16 +104,45 @@ public class ChangeOrderPOM extends FilterOrderPOM{
 		this.removeBtn.click();
 		
 	}
-	public void addProduct(String product,String quantity) throws InterruptedException {
+	public void editOrderStatus(WebDriver driver,String status) {
+		this.viewBtn.click();
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView();", orderStatus);
+		Select s=new Select(orderStatus);
+		s.selectByVisibleText(status);
+		this.addHistory.click();	
+		
+		
+	}
+	public void addProduct(String product) throws InterruptedException {
 		this.choosePrd.clear();
 		this.choosePrd.sendKeys(product);
 		Thread.sleep(2000);
-		this.elementToSelect.click();
+		this.elementToSelect1.click();
+		
+	
+		
+			
+	}
+	public void addQuantity(String quantity) {
+		this.quantity.clear();
 		this.quantity.sendKeys(quantity);
-		this.addPrdBtn.click();
+		
 		
 	}
+	public String getProduct() {
+		String product=this.choosePrd.getAttribute("value");
+		return product;
+	}
 	
+	public String getQuantity() {
+		
+		String quan=this.quantity.getAttribute("value");
+		return quan;
+	}
+	public void addBtn() {
+		this.addPrdBtn.click();
+	}
 	public String paymentPage() throws InterruptedException {
 		
 		this.cartcontinueBtn.click();

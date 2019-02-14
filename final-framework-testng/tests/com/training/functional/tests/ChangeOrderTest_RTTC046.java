@@ -71,8 +71,11 @@ public class ChangeOrderTest_RTTC046 {
 		deletePOM.moveToSales(); 
 		deletePOM.clickOrders(); 
 		screenShot.captureScreenShot("Second_17");
+		changePOM.filterOrder("87");
 		changePOM.editOrder(driver);
-		changePOM.addProduct("Integer vitae iaculis massa","2");
+		changePOM.addProduct("Integer vitae iaculis massa");
+		changePOM.addQuantity("2");
+		changePOM.addBtn();
 		String actual=changePOM.paymentPage();
 		String expected="Success: You have modified orders!";
 		boolean st=actual.contains(expected);

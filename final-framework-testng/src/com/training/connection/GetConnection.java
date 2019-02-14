@@ -20,7 +20,7 @@ public class GetConnection {
 			Class.forName(dbBean.getDriver());
 			connection = DriverManager.getConnection(dbBean.getUrl() , 
 					dbBean.getUserName(), dbBean.getPassword());
-			
+						
 			return connection; 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

@@ -77,6 +77,14 @@ public class FilterOrderPOM {
 		
 		return Actual;
 	}
+	
+	public void verifyOrderDetails(String orderId) {
+		this.orderId.clear();
+		this.orderId.sendKeys(orderId);
+		this.filterBtn.click();	
+		
+		
+	}
 		
 		public String verifyOrderDetailsWithCustomer(String customer){
 			this.orderId.clear();
